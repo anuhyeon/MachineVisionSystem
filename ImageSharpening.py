@@ -18,7 +18,7 @@ for a in alpha:
     print(f"{output_path}에 sharpened 이미지가 저장되었습니다.")
     
 #     # 이미지 표시
-#     cv.imshow(f'Filtered Image {k}x{k}', blur)
+#     cv.imshow(f'Filtered Image {k}x{k}', sharpened_img)
     
 #     # 키 입력 대기 (0이면 무한 대기)
 #     cv.waitKey(0)
