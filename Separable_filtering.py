@@ -24,7 +24,7 @@ print(f"전체 비트 깊이 (모든 채널 합): {bit_depth * channels} bits")
 print('원본이미지 사이즈:',img.shape)
 print('- - - - - - - - - - - - - - - - - - - - - - -')
 
-# float32로 변환했음 - uint8로 할 경우 나중에 부동소수점 오차 때문에 2D 필터와 separable 필터 적용후 이미지 결과간 오차가 발생할 수 있기 때문!
+# float32로 변환했음 - uint8로 할 경우 opencv내부 적으로 uint8을 float32로 변환하는 과정에서 발생하는 소수점 반올림 오차 때문에 2D 필터와 separable 필터 적용후 이미지 결과간 오차가 발생할 수 있기 때문!
 img = img.astype(np.float32)
 # 데이터 타입 확인
 dtype = img.dtype
