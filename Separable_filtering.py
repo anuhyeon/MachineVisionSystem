@@ -8,7 +8,6 @@ print(kernel1d.shape)
 # 2) 1D Gaussian 필터의 outerproduct를 사용해 2D Gaussian 필터 생성
 kernel2d = np.outer(kernel1d, kernel1d.transpose())
 print(kernel2d.shape)
-# 3) 입력 영상을 kernel2d를 사용하여 filtering - 
 img = cv.imread('./resized_images/resized_102811.jpg')
 # 데이터 타입 확인
 dtype = img.dtype
@@ -26,10 +25,8 @@ print('- - - - - - - - - - - - - - - - - - - - - - -')
 
 # float32로 변환했음 - uint8로 할 경우 opencv내부 적으로 uint8을 float32로 변환하는 과정에서 발생하는 소수점 반올림 오차 때문에 2D 필터와 separable 필터 적용후 이미지 결과간 오차가 발생할 수 있기 때문!
 img = img.astype(np.float32)
-# 데이터 타입 확인
 dtype = img.dtype
 print(f"데이터 타입: {dtype}")
-# 채널 수와 비트 깊이 계산
 channels = img.shape[2] if len(img.shape) == 3 else 1
 bit_depth = img.itemsize * 8  # 각 채널의 비트 깊이 
 
@@ -38,9 +35,9 @@ print(f"비트 깊이 (채널당): {bit_depth} bits")
 print(f"전체 비트 깊이 (모든 채널 합): {bit_depth * channels} bits")
 print('원본이미지 사이즈:',img.shape)
 print('- - - - - - - - - - - - - - - - - - - - - - -')
-
+# 3) 입력 영상을 kernel2d를 사용하여 filtering  
 start_time = time.time()
-filtered_img = cv.filter2D(img, ddepth=-1, kernel=kernel2d) # ddepth = -1이면 입력 이미지(img)와 동일한 깊이를 사용 -> 주의할 점 채널의 깊이가 아니라 이미지의 픽셀의 비트 깊이를 의미, 즉, 픽셀이 가질 수 있는 비트의 범위(비트 표현의 깊이)라고 볼 수 있음
+filtered_img = cv.filter2D(img, ddepth=-1, kernel=kernel2d) # ddepth = -1이면 입력 이미지(img)와 동일한 bit수를 사용 -> 주의할 점 채널의 깊이가 아니라 이미지의 픽셀의 비트 깊이를 의미, 즉, 픽셀이 가질 수 있는 비트의 범위(비트 표현의 깊이)라고 볼 수 있음
 end_time = time.time()
 print('2D filtered 이미지 비트뎁스:',filtered_img.itemsize * 8,'비트')
 print('2D filtered shape:',filtered_img.shape)
@@ -79,8 +76,7 @@ print('sub_image 이미지 비트뎁스:',sub_image.itemsize * 8,'비트')
 print(sub_image.shape)
 cv.imshow('Difference Image',sub_image)
 cv.waitKey(0)
-# cv.imshow('filtered_img Image',filtered_img)
-# cv.waitKey(0)
-# cv.imshow('separable_filtered_img Image',separable_filtered_img)
-# cv.waitKey(0)
 cv.destroyAllWindows()
+
+
+

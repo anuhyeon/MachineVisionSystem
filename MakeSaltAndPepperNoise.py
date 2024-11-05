@@ -13,13 +13,8 @@ def addsaltandpeppernoise(image, ratio):
     out[coords[0],coords[1],coords[2]] = 0
     return out
 
-
-# 원본 이미지 읽기 (그레이스케일)
 img = cv.imread('./resized_images/resized_102811.jpg')
-
-# 세 가지 비율로 Salt and Pepper Noise 추가
 ratios = [0.02, 0.1, 0.25]
-
 for ratio in ratios:
     noisy_img = addsaltandpeppernoise(img, ratio)
     cv.imwrite(f'./saltandpeppernoise/salt_pepper_noise_ratio_{ratio}.jpg', noisy_img)

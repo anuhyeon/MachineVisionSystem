@@ -9,3 +9,4 @@ separable_filtered
 aftermedianfilter
 saltandpeppernoise
 filtered_image_best_kernel
+aftersobelfilter
