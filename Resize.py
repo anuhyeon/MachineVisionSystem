@@ -11,7 +11,7 @@ output_dir = './resized_images/'  # 리사이즈된 이미지가 저장될 디�
 #     os.makedirs(output_dir)
 
 # 입력 디렉토리 내 모든 JPG 파일 탐색
-jpg_files = glob.glob(os.path.join(input_dir, '*.jpg'))#'*.jpg'
+jpg_files = glob.glob(os.path.join(input_dir, 'IMG_1368 2.jpg'))#'*.jpg'
 
 # 파일 처리
 for idx, file in enumerate(jpg_files):
@@ -24,7 +24,7 @@ for idx, file in enumerate(jpg_files):
         continue
 
     # 이미지 리사이즈
-    resized_image = cv2.resize(image, (512, 512))
+    resized_image = cv2.resize(image, (640, 480))
     
     # 사용자 정의 저장 이름 설정 (예: resized_1.jpg, resized_2.jpg ...)
     save_name = f"resized_1028{idx + 1}.jpg"  # 여기서 이름을 조정할 수 있습니다.
