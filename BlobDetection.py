@@ -9,6 +9,8 @@ img = cv.resize(image,(640,480))
 # 1)
 blob_img = img.copy()  # 원본 이미지 복사
 gray= cv.cvtColor(blob_img,cv.COLOR_BGR2GRAY)
+cv.imwrite('./afterBLOB/blob_detected_corner_gray.jpg',gray)
+
 sift = cv.SIFT_create()
 kp = sift.detect(gray,None)
 blob_detected_img = cv.drawKeypoints(gray,kp,blob_img,flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
@@ -31,9 +33,12 @@ scaled_img = cv.resize(scaled_blob_img,(640*2,480*2))
 scaled_gray= cv.cvtColor(scaled_img,cv.COLOR_BGR2GRAY)
 scaled_sift = cv.SIFT_create()
 scaled_kp = scaled_sift.detect(scaled_gray,None)
-scaled_blob_detected_img = cv.drawKeypoints(scaled_gray,scaled_kp,scaled_blob_img,flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+scaled_blob_detected_img = cv.drawKeypoints(scaled_gray,scaled_kp,img,flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
 cv.imwrite('./afterBLOB/blob_detected_corner_scaled.jpg',scaled_blob_detected_img)
+
+
+
 
 
 
