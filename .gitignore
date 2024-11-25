@@ -13,3 +13,4 @@ aftersobelfilter
 afterHCD
 afterBLOB
 ImageMatchimg_SIFT
+afterHomographyEstimation
