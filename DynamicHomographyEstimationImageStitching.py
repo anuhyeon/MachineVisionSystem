@@ -2,7 +2,6 @@ import numpy as np
 import cv2 as cv
 import matplotlib.pyplot as plt
 
-
 img1 = cv.imread('/Users/an-uhyeon/MachineVisionSystem/Images/IMG_1444.jpg',cv.IMREAD_GRAYSCALE)
 img1 = cv.resize(img1,(480,640))
 cv.imwrite('/Users/an-uhyeon/MachineVisionSystem/afterHomographyEstimation/origin_img1.jpg',img1)
@@ -54,6 +53,11 @@ img_dst = cv.resize(im_dst,(480,640))
 cv.imwrite('/Users/an-uhyeon/MachineVisionSystem/afterHomographyEstimation/resized_im_dst.jpg',img_dst)
 print(f'img_dst size : {img_src.shape}')
 
+cv.imshow('img_src Image', img_src)
+cv.waitKey(0)
+cv.imshow('img_dst Image', img_dst)
+cv.waitKey(0)
+
 # Homography 계산
 if len(matches) >= 4:  # 최소 4개의 매칭이 있어야 Homography 계산 가능
     src_pts = np.float32([kp1[m.queryIdx].pt for m in matches[:80]]).reshape(-1, 1, 2)
@@ -69,15 +73,28 @@ else:
 # 이미지 스티칭
 # img2의 크기를 기준으로 변환된 img1을 확장
 height, width = img2.shape
+print(f'gray : {height}, {width}')
 result = cv.warpPerspective(img1, h, (width * 2, height))  # 폭을 두 배로 확장
 # 변환된 img1 오른쪽에 img2를 복사
 result[0:height, 0:width] = img2
 
+# 이미지 스티칭 - 컬러
+# img2의 크기를 기준으로 변환된 img1을 확장
+height, width, _ = img_src.shape
+print(f'color : {height}, {width}')
+result_color = cv.warpPerspective(img_src, h, (width * 2, height))  # 폭을 두 배로 확장
+# 변환된 img1 오른쪽에 img2를 복사
+result_color[0:height, 0:width] = img_dst
+
 # im_out = cv.warpPerspective(img_src, h, (img_dst.shape[1] + img_src.shape[1], img_dst.shape[0]))
 # im_out[0:img_src.shape[0], 0:img_src.shape[1]] = im_dst
-
 
 # 결과 출력 및 저장
 cv.imshow('Stitched Image', result)
 cv.waitKey(0)
 cv.imwrite('/Users/an-uhyeon/MachineVisionSystem/afterHomographyEstimation/stitched_result.jpg', result)
+
+# 결과 출력 및 저장
+cv.imshow('Stitched Image color', result_color)
+cv.waitKey(0)
+cv.imwrite('/Users/an-uhyeon/MachineVisionSystem/afterHomographyEstimation/stitched_result_color.jpg', result_color)
